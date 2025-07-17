@@ -18,14 +18,14 @@ urlpatterns = [
     
     # 削除機能
     path('post/<int:pk>/delete/', views.delete_post, name='delete_post'),
-     path('my-posts/', views.my_posts, name='my_posts'),
-       path('select-method/', views.select_creation_method, name='select_method'),
+
+    # 自分の投稿一覧・検索機能
+    path('my-posts/', views.my_posts, name='my_posts'),
+
+    # 投稿方法の選択機能
+    path('select-method/', views.select_creation_method, name='select_method'),
     path('create-freely/', views.create_post_freely, name='create_freely'),
+    
+    # いいね機能
+    path('post/<int:pk>/like/', views.like_post, name='like_post'),
 ]
-
-from django.urls import path
-from . import views
-
-app_name = 'posts'
-
-

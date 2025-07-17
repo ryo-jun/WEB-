@@ -19,4 +19,15 @@ class PostFreeForm(forms.ModelForm):
             'title': 'タイトル',
             'content': '原稿',
         }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 3, 'placeholder': 'コメントを追加...'}),
+        }
+        labels = {
+            'text': '', # ラベルを非表示にする
+        }
+
 
