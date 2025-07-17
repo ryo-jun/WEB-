@@ -1,22 +1,18 @@
-import os # osをインポート
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# ★ SECRET_KEYは後でRenderの環境変数に設定します
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-your-default-key')
+# SECRET_KEYはRenderの環境変数から読み込まれます
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-local-dev')
 
-# ★ 本番環境ではDEBUGをFalseにします
-# 'RENDER'という環境変数が存在するかどうかで、本番環境かどうかを判断します
-IS_HEROKU_APP = "RENDER" in os.environ
-if not IS_HEROKU_APP:
-    DEBUG = True
-else:
-    DEBUG = False
+# ★ デバッグモードを強制的にONにする
+DEBUG = True
 
 
 # ★ Renderのホスト名などを許可します
@@ -35,14 +31,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # ★ WhiteNoiseを有効にする
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # ★ WhiteNoiseのミドルウェアを追加
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,7 +51,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # DIRSの設定を確認
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,12 +113,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# ★ 静的ファイルの置き場所を指定
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-# ★ WhiteNoiseのストレージ設定
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
