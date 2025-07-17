@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>自分の投稿一覧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; margin: 0; background-color: #f0f2f5; }
+        .container { padding: 20px; }
+        .search-form { margin-bottom: 20px; display: flex; }
+        .search-form input[type="text"] { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .search-form button { padding: 10px 15px; border: none; background-color: #007bff; color: white; border-radius: 4px; margin-left: 10px; }
+        .post-list a { display: block; padding: 15px; border: 1px solid #ddd; margin-top: 10px; text-decoration: none; color: #333; background-color: #fff; border-radius: 5px; }
+        .back-link { display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>自分の投稿一覧</h1>
+        <form class="search-form" method="get" action="{% url 'posts:my_posts' %}">
+            <input type="text" name="q" value="{{ query|default:'' }}" placeholder="タイトルで検索...">
+            <button type="submit">検索</button>
+        </form>
+
+        <div class="post-list">
+            {% for post in posts %}
+                <a href="{% url 'posts:post_detail' pk=post.pk %}">{{ post.title }}</a>
+            {% empty %}
+                <p>該当する投稿がありません。</p>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'posts:home' %}" class="back-link">ホームに戻る</a>
+    </div>
+</body>
+</html>

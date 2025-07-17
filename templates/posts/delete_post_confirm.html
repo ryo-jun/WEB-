@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿の削除</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        .confirm-box { max-width: 500px; margin: auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; }
+        .actions button, .actions a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+        }
+        .delete-btn { background-color: #dc3545; }
+        .cancel-btn { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="confirm-box">
+        <h2>本当に削除しますか？</h2>
+        <p>「{{ post.title }}」を削除すると、元に戻すことはできません。</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="actions">
+                <button type="submit" class="delete-btn">はい、削除します</button>
+                <a href="{% url 'posts:home' %}" class="cancel-btn">キャンセル</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

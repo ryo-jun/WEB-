@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>すべらない話 - ログイン</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f4f4f4; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; }
+        h1 { color: #333; }
+        form { display: flex; flex-direction: column; }
+        form p { text-align: left; }
+        button { margin-top: 20px; padding: 10px; background: #5cb85c; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .signup-link { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>すべらない話 - ログイン</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">ログイン</button>
+        </form>
+        <p class="signup-link">アカウントがありませんか？ <a href="{% url 'posts:signup' %}">サインアップ</a></p>
+    </div>
+</body>
+</html>

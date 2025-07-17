@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿方法の選択</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .selection-box { display: flex; justify-content: center; gap: 30px; }
+        .selection-box a {
+            display: block;
+            width: 200px;
+            padding: 40px 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .selection-box a:hover { transform: translateY(-5px); }
+        .selection-box h3 { margin-top: 0; }
+    </style>
+</head>
+<body>
+    <h1>投稿方法を選んでください</h1>
+    <div class="selection-box">
+        <a href="{% url 'posts:create_post' %}">
+            <h3>テンプレートを使って作成</h3>
+            <p>いくつかの項目を埋めるだけでAIが面白い話を作ります。</p>
+        </a>
+        <a href="{% url 'posts:create_freely' %}">
+            <h3>自由に作成</h3>
+            <p>自分で考えた話を自由に書き込んで投稿します。</p>
+        </a>
+    </div>
+    <p><a href="{% url 'posts:home' %}">ホームに戻る</a></p>
+</body>
+</html>
