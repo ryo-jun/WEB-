@@ -4,20 +4,15 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECRET_KEYはRenderの環境変数から読み込まれます
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-local-dev')
 
-# ★ 本番環境ではDEBUGをFalseにします
-# 'RENDER'という環境変数が存在するかどうかで、本番環境かどうかを判断します
-IS_RENDER_APP = "RENDER" in os.environ
-
-if not IS_RENDER_APP:
-    DEBUG = True
-else:
-    DEBUG = False
+# ★ デバッグモードを強制的にONにする
+DEBUG = True
 
 
 # ★ Renderのホスト名などを許可します
@@ -75,23 +70,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# ★ 本番環境(Render)と開発環境でデータベースの場所を切り替える
-if IS_RENDER_APP:
-    # 本番データベース: Renderの永続ディスクを使用
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': '/var/data/db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # 開発データベース: ローカルファイルを使用
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # Password validation
