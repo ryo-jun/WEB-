@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url # dj_database_urlをインポート
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,17 +75,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# ★ 本番環境(Render)と開発環境でデータベースの場所を切り替える
+# ★ 本番環境(Render)と開発環境でデータベースを切り替える
 if IS_RENDER_APP:
-    # 本番データベース: Renderの永続ディスクを使用
+    # 本番データベース: RenderのPostgreSQLを使用
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': '/var/data/db.sqlite3',
-        }
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True,
+        )
     }
 else:
-    # 開発データベース: ローカルファイルを使用
+    # 開発データベース: ローカルのsqlite3を使用
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
