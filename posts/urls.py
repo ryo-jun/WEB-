@@ -14,5 +14,5 @@ urlpatterns = [
     path('my-posts/', views.my_posts, name='my_posts'),
     path('select-method/', views.select_creation_method, name='select_method'),
     path('create-freely/', views.create_post_freely, name='create_freely'),
+    path('post/<int:pk>/like/', views.like_post, name='like_post'),
 ]
-
