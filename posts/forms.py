@@ -1,14 +1,11 @@
-from .models import Comment
 from django import forms
 from .models import Post
 
 class PostCreationForm(forms.ModelForm):
     class Meta:
         model = Post
-        # ★新しい項目リスト
         fields = ['title', 'protagonist', 'setting_detail', 'key_item', 'twist']
 
-# このフォームを追記
 class PostFreeForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -20,15 +17,3 @@ class PostFreeForm(forms.ModelForm):
             'title': 'タイトル',
             'content': '原稿',
         }
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['text']
-        widgets = {
-            'text': forms.Textarea(attrs={'rows': 3, 'placeholder': 'コメントを追加...'}),
-        }
-        labels = {
-            'text': '', # ラベルを非表示にする
-        }
-
-

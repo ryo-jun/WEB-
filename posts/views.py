@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import Post, Comment 
-from .forms import PostCreationForm, PostFreeForm, CommentForm
+from .models import Post
+from .forms import PostCreationForm, PostFreeForm
 
 # --- ユーザー認証関連のビュー ---
 
@@ -77,22 +77,8 @@ def create_post(request):
 @login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    comment_form = CommentForm()
-    
-    # コメント投稿の処理
-    if request.method == 'POST' and 'comment_submit' in request.POST:
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.post = post
-            comment.author = request.user
-            comment.save()
-            return redirect('posts:post_detail', pk=post.pk)
-
     context = {
         'post': post,
-        'comment_form': comment_form,
-        'is_liked': post.likes.filter(id=request.user.id).exists() # ユーザーがいいね済みか
     }
     return render(request, 'posts/post_detail.html', context)
 
@@ -136,14 +122,3 @@ def create_post_freely(request):
     else:
         form = PostFreeForm()
     return render(request, 'posts/create_post_freely.html', {'form': form})
-
-@login_required
-def like_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if post.likes.filter(id=request.user.id).exists():
-        # いいね済みの場合は、いいねを外す
-        post.likes.remove(request.user)
-    else:
-        # いいねされていない場合は、いいねを付ける
-        post.likes.add(request.user)
-    return redirect('posts:post_detail', pk=post.pk)
